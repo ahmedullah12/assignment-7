@@ -1,4 +1,4 @@
--- Active: 1729085763215@@127.0.0.1@5432@university_db
+
 -- create students table
 CREATE TABLE students (
     student_id SERIAL PRIMARY KEY,
@@ -92,3 +92,20 @@ WHERE course_id NOT IN (
 -- Retrieving the students using limit starting from the third student
 SELECT student_name from students LIMIT 2 OFFSET 2;
 
+
+-- Query 6
+-- retrieve the course names and the number of students enrolled in each course
+SELECT course_name, count(*) FROM courses
+JOIN enrollment USING(course_id)
+GROUP BY courses.course_name;
+
+
+-- Query 7
+-- Calculate and display the average age of all students
+SELECT ROUND(avg(age), 2) as average_age FROM students;
+
+
+-- Query 8
+-- retrieve the names of students whose email addresses contain example.com
+SELECT student_name FROM students
+WHERE email LIKE '%example.com%';
