@@ -57,3 +57,38 @@ VALUES
 
 
 
+-- Query 1
+-- inserting a new student record in students table
+INSERT INTO students (student_name, age, email, frontend_mark, backend_mark, status)
+VALUES('Ahmed', 22, 'ahmed@gmail.com', 58, 60, NULL);
+
+
+
+-- Query 2
+--retrieve students name who enrolled in Next.js course
+SELECT s.student_name
+FROM students as s
+JOIN enrollment as e ON s.student_id = e.student_id
+JOIN courses as c ON e.course_id = c.course_id
+WHERE c.course_name = 'Next.js';
+
+
+-- Query 3
+-- Update the status of the student with highest total mark
+UPDATE students
+SET status = 'Awarded'
+WHERE (frontend_mark + backend_mark) = (SELECT MAX(frontend_mark + backend_mark) FROM students);
+
+
+--Query 4
+-- Delete all the courses that have no students enrolled
+DELETE FROM courses
+WHERE course_id NOT IN (
+    SELECT course_id FROM enrollment
+);
+
+
+-- Query 5
+-- Retrieving the students using limit starting from the third student
+SELECT student_name from students LIMIT 2 OFFSET 2;
+
